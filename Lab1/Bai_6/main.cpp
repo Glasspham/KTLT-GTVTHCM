@@ -1,6 +1,7 @@
 #include<iostream>
 #include<math.h>
 using namespace std;
+#if 1
 struct point
 {
     double x, y;
@@ -15,3 +16,17 @@ int main()
     cin >> B.x >> B.y;
     cout << "Do dai doan thang AB: " << sqrt(pow(B.x - A.x,2) + pow(B.y - A.y,2)) << endl;
 }
+#endif
+
+#if 1
+int main()
+{
+    double Ax, Ay, Bx, By;
+    cout << "Nhap vao toa do A(x,y): ";
+    cin >> Ax >> Ay;
+    cout << "Nhap vao toa do B(x,y): ";
+    cin >> Bx >> By;
+    cout << "Do dai doan thang AB: " << sqrt(pow(Bx - Ax,2) + pow(By - Ay,2)) << endl;
+    return 0;
+}
+#endif
