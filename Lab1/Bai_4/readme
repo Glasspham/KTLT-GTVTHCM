@@ -1,0 +1,4 @@
+Bài 4: Viết chương trình nhập vào 2 giá trị số lượng, đơn giá. Tính tiền và thuế giá trị gia tăng
+phải trả, biết:
+b. Tiền = số lượng * đơn giá
+c. Thuế giá trị gia tăng = 10% * tiền
