@@ -21,12 +21,18 @@ int main()
 #if 1
 int main()
 {
-    double Ax, Ay, Bx, By;
-    cout << "Nhap vao toa do A(x,y): ";
-    cin >> Ax >> Ay;
-    cout << "Nhap vao toa do B(x,y): ";
-    cin >> Bx >> By;
-    cout << "Do dai doan thang AB: " << sqrt(pow(Bx - Ax,2) + pow(By - Ay,2)) << endl;
+    int choice;
+    do
+    {
+        double Ax, Ay, Bx, By;
+        cout << "Nhap vao toa do A(x,y): ";
+        cin >> Ax >> Ay;
+        cout << "Nhap vao toa do B(x,y): ";
+        cin >> Bx >> By;
+        cout << "Do dai doan thang AB: " << sqrt(pow(Bx - Ax,2) + pow(By - Ay,2)) << endl;
+        cout << "Ban co muon tinh tiep khong (1:co / 0:khong): ";
+        cin >> choice;
+    } while (choice == 1);
     return 0;
 }
 #endif
