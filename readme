@@ -1,0 +1,18 @@
+Bài tập này là do ban công nghệ thông tin chọn đưa sinh viên làm
+tôi là sinh viên làm và để đây cho mọi người tham khảo.
+Điều thứ nhất là tôi dùng Visual Studio Code có vài cái cách viết 
+đặt biệt ví dụ như 
+-1: #include<bits/stdc++.h> đây là một thư viện gọi tổng quát, nó sẽ
+tự gọi các thư viện cơ bản mà lập trình viên C++ nào cũng sài.
+-2: int n; int a[n]; này là do VSCode tạo biến rác nên mới viết kiểu
+này được.
+Và còn nhiều thứ khác nữa. Nếu tôi quên viết dạng mà mọi IDE nào cũng
+chạy được thì bạn có thể lên AI hỏi (điều này khi nào tôi quên thôi)
+
+Trong bài có sử dụng "preprocessor directives"(hướng dẫn trình biên dịch)
+Trong bài sài nhiều nhất là #if và #endif là 2 thứ luôn đi chung với nhau.
+#if n   Nếu n là 1 thì code chạy
+        Nếu n là 0 thì code không thể chạy
+Và #endif có thể đi cùng với nhiều preprocessor directives khác nữa
+Và mỗi #if & #endif ở đây tôi thể hiện là mỗi cách làm khác nhau có 
+thể dùng cho bài toán.
