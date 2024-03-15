@@ -2,8 +2,7 @@
 #include <algorithm>
 using namespace std;
 
-int main() 
-{
+int main() {
     float a, b, c, d; 
     cout << "Nhap vao 3 so bat ki (cach nhau boi dau cach): ";
     cin >> a >> b >> c >> d;

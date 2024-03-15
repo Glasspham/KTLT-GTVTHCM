@@ -22,8 +22,7 @@ int main()
             if(j != n)
             {
                 if(i * j >= 10) cout << " |  ";
-                else
-                    cout << "  |  ";
+                else cout << "  |  ";
             }
         }
         cout << endl;

@@ -1,29 +1,29 @@
 #include<iostream>
 #include<cmath>
 using namespace std;
-int main()
-{
+int main(){
     float a,b,c;
     cout << "Nhap vao 3 he so cua phuong trinh (ax^2 + bx + c = 0): ";
     cin >> a >> b >> c;
-    if(a == 0)
-        cout << "la phuong trinh bac nhat va co nghiem la: " << -c/b;
-    else
-    {
+    if(a == 0){
+        if(b  != 0) cout << "La phuong trinh bac nhat va co nghiem la: " << -c/b << endl;
+        else{
+            if(c != 0) cout << "Phuong trinh vo ly! \n";
+            else cout << "Phuong trinh luon dung voi moi x\n";
+        }
+    }   
+    else{
         float delta = b * b - 4 * a * c;
-        if(delta > 0)
-        {
+        if(delta > 0){
             float x1 = (-b + sqrt(delta)) / (2 * a);
             float x2 = (-b - sqrt(delta)) / (2 * a);
             cout << "Phuong trinh co 2 nghiem: \nx1 = " << x1 << "\nx2 = " << x2 << endl; 
         }
-        else if(delta == 0)
-        {
+        else if(delta == 0){
             float x = -b / (2 * a);
             cout << "Phuong trinh co nghiem kep: \nx1 = x2 = " << x << endl;
         }
-        else
-        {
+        else{
             float xt = -b / (2 * a);
             float xa = sqrt(abs(delta)) / (2 * a);
             cout << "Phuong trinh co 2 nghiem ao: \nx1 = " << xt;
