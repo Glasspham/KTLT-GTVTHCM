@@ -1,5 +1,5 @@
 #include<iostream>
-uisng namespace std;
+using namespace std;
 int main()
 {
     char s1, s2;
