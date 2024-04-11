@@ -21,7 +21,6 @@ void CountCharter(string s){
 void DelFirst(string &s){
     while (s[0] == ' ')
         s.erase(0, 1);
-    cout << "Chuoi sau khi xoa ky tu dau tien la khoang trang!\n" << s << endl;
 }
 
 void DelEnd(string &s){
@@ -30,27 +29,33 @@ void DelEnd(string &s){
 }
 
 void DelMid(string &s){
-    int len = s.length();
-    for(int i = 0; i < len; i++)
-        if(s[i] == ' ' && s[i + 1] == ' ')
+    for(int i = 0; i < s.length() - 1; i++) {
+        if(s[i] == ' ' && s[i + 1] == ' ') {
             s.erase(i, 1);
+            i--;
+        }
+    }
 }
 
 void UpperWordFrist(string &s){
     int len = s.length();
     if(s[0] >= 'a' && s[0] <= 'z')
         s[0] -= 32;
-    for(int i = 1; i < len; i++)
+    for(int i = 1; i < len; i++){
         if(s[i] == ' ' && s[i + 1] >= 'a' && s[i + 1] <= 'z')
             s[i + 1] -= 32;
+        else if(s[i] != ' ' && s[i + 1] >= 'A' && s[i + 1] <= 'Z')
+            s[i + 1] += 32;
+    }
 }
 
 void ProcessString(string &s){
     #if 0
+    DelFirst(s);
     DelEnd(s);
     DelMid(s);
     UpperWordFrist(s);
-    cout << "Chuoi sau khi xu ly la: " << s << endl
+    cout << "Chuoi sau khi xu ly la: " << s << endl;
     #endif
 
     #if 1
