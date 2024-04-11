@@ -21,7 +21,7 @@ void CountCharter(string s){
 void DelFirst(string &s){
     while (s[0] == ' ')
         s.erase(0, 1);
-    cout << "Chuoi sau khi xoa ky tu dau tien la khoang trang!\n" << s << endl;
+    cout << "Chuoi sau khi xoa ky tu dau tien la khoang trang!\n" << res << endl;
 }
 
 void DelEnd(string &s){
