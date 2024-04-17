@@ -12,10 +12,17 @@ double distance(const point& p1, const point& p2) {
     return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
 }
 
+// Hàm kiểm tra xem ba điểm có thẳng hàng không
+bool areCollinear(const point& p1, const point& p2, const point& p3) {
+    return (p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y)) == 0;
+}
+
 // Hàm kiểm tra hướng của ba điểm
 int orientation(const point& p1, const point& p2, const point& p3){
+    // Kiểm tra xem ba điểm có thẳng hàng không
+    if(areCollinear(p1, p2, p3)) return 0;  // Trả về 0 nếu ba điểm thẳng hàng
+    // Tính giá trị của biểu thức để xác định hướng của ba điểm
     int val = (p2.y - p1.y) * (p3.x - p2.x) - (p2.x - p1.x) * (p3.y - p2.y);
-    if (val == 0) return 0;     // Các điểm thẳng hàng
     return (val > 0) ? 1 : 2;   // 1: Ngược chiều kim đồng hồ, 2: Theo chiều kim đồng hồ
 }
 
