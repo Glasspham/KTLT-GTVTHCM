@@ -1,15 +1,55 @@
 #include<iostream>
+#include<math.h>
 #include<vector>
-#include<cmath>
 using namespace std;
 
 struct point{
-    double x,y;
+    float x, y;
+    float lengthSegment(point p){
+        return sqrt(pow(x - p.x, 2) + pow(y - p.y, 2));
+    }
 };
 
-// Hàm tính khoảng cách giữa hai điểm
-double distance(const point& p1, const point& p2) {
-    return sqrt(pow(p2.x - p1.x, 2) + pow(p2.y - p1.y, 2));
+struct line{
+    float a, b, c;
+};
+
+// Nhập tọa độ điểm
+point input(){
+    point p;
+    cout << "Enter point (x,y): ";
+    cin >> p.x >> p.y;
+    return p;
+}
+
+// Hàm tính khoảng cách từ điểm đến đường thẳng
+float distanceFromPointToLine(point p, line l){
+    return abs(l.a * p.x + l.b * p.y + l.c) / sqrt(pow(l.a, 2) + pow(l.b, 2));
+}
+
+// Hàm tính góc giữa hai vector
+float angleBetweenVectors(const vector<point>& points){
+    if(points.size() != 4) return -1;
+    point source1 = points[0], target1 = points[1], source2 = points[2], target2 = points[3];
+    float dotProduct = (target1.x - source1.x) * (target2.x - source2.x) + (target1.y - source1.y) * (target2.y - source2.y);
+    float magnitude1 = target1.lengthSegment(source1);
+    float magnitude2 = target2.lengthSegment(source2);
+    return acos(dotProduct / (magnitude1 * magnitude2));
+}
+
+// Hàm kiểm tra xem 3 điểm có tạo thành tam giác không
+string triangleType(const vector<point>& points){
+    point a = points[0], b = points[1], c = points[2];
+    float ab = a.lengthSegment(b), bc = b.lengthSegment(c), ca = c.lengthSegment(a);
+    if(ab == bc && bc == ca) return "Equilateral triangle";
+    if(ab == bc || bc == ca || ca == ab){
+        if(pow(ab, 2) + pow(bc, 2) == pow(ca, 2) || pow(bc, 2) + pow(ca, 2) == pow(ab, 2) || pow(ca, 2) + pow(ab, 2) == pow(bc, 2))
+            return " Isosceles right triangle";
+        return "Isosceles triangle";
+    }
+    if(pow(ab, 2) + pow(bc, 2) == pow(ca, 2) || pow(bc, 2) + pow(ca, 2) == pow(ab, 2) || pow(ca, 2) + pow(ab, 2) == pow(bc, 2))
+        return "Right-angled triangle";
+    return "Regular triangle";
 }
 
 // Hàm kiểm tra xem ba điểm có thẳng hàng không
@@ -32,16 +72,16 @@ bool isConvexPolygon(const vector<point>& points){
     int prevOrientation = orientation(points[0], points[1], points[2]);
     for (int i = 1; i < n; i++){
         int currentOrientation = orientation(points[i], points[(i + 1) % n], points[(i + 2) % n]);
-        if (currentOrientation != prevOrientation) 
+        if (currentOrientation != prevOrientation || currentOrientation == 0) 
             return false;  // Đa giác không là đa giác lồi
     }
     return true;  // Đa giác là đa giác lồi
 }
 
 // Hàm tính diện tích của đa giác bằng phương pháp Gauss
-double calculateArea(const vector<point>& points){
+float calculateArea(const vector<point>& points){
     int n = points.size();
-    double area = 0.0;
+    float area = 0.0;
     for (int i = 0; i < n; i++){
         int j = (i + 1) % n;
         area += (points[i].x * points[j].y - points[j].x * points[i].y);
@@ -50,37 +90,29 @@ double calculateArea(const vector<point>& points){
 }
 
 // Hàm tính chu vi của đa giác
-double calculatePerimeter(const vector<point>& points){
+float calculatePerimeter(const vector<point>& points){
     int n = points.size();
-    double perimeter = 0.0;
+    float perimeter = 0.0;
     for (int i = 0; i < n; i++){
         int j = (i + 1) % n;
-        perimeter += distance(points[i], points[j]);
+        point temp = points[i];
+        perimeter += temp.lengthSegment(points[j]);
     }
     return perimeter;
 }
 
 int main(){
-    int n;
-    do{
-        cout << "Nhap so luong diem: ";
-        cin >> n;
-        if(n <= 0 || n > 9) cout << "Nhap lai! chi toi da 9 diem!\n";
-    } while (n <= 0 || n > 9);
+    int n; 
+    cout << "Enter number of points: "; cin >> n;
     vector<point> P(n);
-    for(int i = 0; i < n; i ++){
-        cout << "Nhap vao toa do diem thu " << i + 1 << ": ";
-        cin >> P[i].x >> P[i].y;
+    for(int i = 0; i < n; i++){
+        cout << "Point " << i + 1 << endl;
+        P[i] = input();
     }
-    if(n == 1) cout << "Chi co mot diem nen khong tao ra da giac!\n";
-    else if (n == 2) cout << "2 diem nen tao ra mot duong thang co do dai la " << distance(P[0],P[1]) << endl;
-    else if(n >= 3){    
-        if(isConvexPolygon(P)){
-            cout << "Day la mot da giac loi!\n";
-            cout << "Dien tich cua da giac: " << calculateArea(P) << endl;
-            cout << "Chu vi cua da giac: " << calculatePerimeter(P) << endl;
-        }
-        else cout << "Day khong phai la da giac loi!\n";
+    if(n == 3 && isConvexPolygon(P)){
+        cout << "Triangle type: " << triangleType(P) << endl;
     }
-    return 0;
+    else{
+        cout << "Not a triangle\n";
+    }
 }
