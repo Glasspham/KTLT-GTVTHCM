@@ -1,8 +1,8 @@
 #include<iostream>
 #include<iomanip>
 #include<cstring>
-#define MAXID 10
-#define MAXNAME 20
+#define MAXID 10 // Số ký tự tối đa của ID
+#define MAXNAME 30 // Số ký tự tối đa của tên
 using namespace std;
 
 struct NgaySinh{
@@ -47,15 +47,6 @@ void ProcessName(char *s){
         else if(*(s + i) != ' ' && *(s + i + 1) >= 'A' && *(s + i + 1) <= 'Z')
             *(s + i + 1) += 32;
     }
-    int size = strlen(s);
-    int *temp = new int[size];
-    for(int i = 0; i < size; ++i)
-        *(temp + i) = *(s + i);
-    delete[] s;
-    s = new char[size];
-    for(int i = 0; i < size; ++i)
-        *(s + i) = *(temp + i);
-    delete[] temp;
 }
 
 bool NamNhuan(int nam){
@@ -77,18 +68,21 @@ void InputBrithDay(NgaySinh &bd){
     do{
         cout << "Nhap nam sinh: ";
         cin >> bd.nam;
-        if(bd.nam < 0) cout << "Nam sinh khong hop le. Vui long nhap lai\n";
-    } while (bd.nam < 0);
+        if(bd.nam < 0) 
+            cout << "Nam sinh khong hop le. Vui long nhap lai\n";
+    }while (bd.nam < 0);
     do{
         cout << "Nhap thang sinh: ";
         cin >> bd.thang;
-        if(bd.thang < 1 || bd.thang > 12) cout << "Thang sinh khong hop le. Vui long nhap lai\n";
-    } while (bd.thang < 1 || bd.thang > 12);
+        if(bd.thang < 1 || bd.thang > 12) 
+            cout << "Thang sinh khong hop le. Vui long nhap lai\n";
+    }while (bd.thang < 1 || bd.thang > 12);
     do{
         cout << "Nhap ngay sinh: ";
         cin >> bd.ngay;
-        if(bd.ngay < 1 || bd.ngay > NgayTrongThang(bd.thang, bd.nam)) cout << "Ngay sinh khong hop le. Vui long nhap lai\n";
-    } while (bd.ngay < 1 || bd.ngay > NgayTrongThang(bd.thang, bd.nam));
+        if(bd.ngay < 1 || bd.ngay > NgayTrongThang(bd.thang, bd.nam)) 
+            cout << "Ngay sinh khong hop le. Vui long nhap lai\n";
+    }while (bd.ngay < 1 || bd.ngay > NgayTrongThang(bd.thang, bd.nam));
 }
 
 string ProcessBrithDay(NgaySinh bd){
@@ -107,11 +101,15 @@ void inputSV(SinhVien *s){
     cin.ignore();
     cin.getline(s->ID, MAXID, '\n');
     cout << "Nhap ten: ";
-    cin.getline(s->ten, MAXNAME, '\n');
+    cin.getline(s->ten, MAXNAME);
     ProcessName(s->ten);
     InputBrithDay(s->bd);
-    cout << "Nhap diem TB: ";
-    cin >> s->diemTb;
+    do{
+        cout << "Nhap diem TB: ";
+        cin >> s->diemTb;
+        if(s->diemTb < 0 || s->diemTb > 10) 
+            cout << "Diem TB khong hop le. Vui long nhap lai\n";
+    }while (s->diemTb < 0 || s->diemTb > 10);
 }
 
 void outputSV(SinhVien *s){
