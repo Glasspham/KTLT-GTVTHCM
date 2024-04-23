@@ -1,6 +1,0 @@
-Nhập 3 môn toán lý hóa, tính trung bình rồi phần loại học lực
-tb < 5: kém
-5 <= tb < 7: trung bình
-7 <= tb < 8: khá
-8 <= tb < 10: giỏi
-tb = 10: xuất sắc
