@@ -1,6 +1,7 @@
 #include<iostream>
 #include<iomanip>
 #include<cstring>
+#include<vector>
 #define MAXID 10 // Số ký tự tối đa của ID
 #define MAXNAME 30 // Số ký tự tối đa của tên
 using namespace std;
@@ -13,7 +14,9 @@ struct SinhVien{
     char ID[MAXID];
     char ten[MAXNAME];
     NgaySinh bd;
+    vector<float> mark;
     float diemTb;
+    float tongDiem;
 };
 
 struct LopHoc{
@@ -21,9 +24,11 @@ struct LopHoc{
     int size;
 };
 
-void createLopHoc(LopHoc &lop, int size){
+void createLopHoc(LopHoc &lop, int size, int quantity){
     lop.sv = new SinhVien[size];
     lop.size = size;
+    for(int i = 0; i < size; ++i)
+        (lop.sv + i)->mark.resize(quantity);
 }
 
 void ProcessName(char *s){
@@ -85,6 +90,23 @@ void InputBrithDay(NgaySinh &bd){
     }while (bd.ngay < 1 || bd.ngay > NgayTrongThang(bd.thang, bd.nam));
 }
 
+void InputDiem(SinhVien *sv){
+    int quantity = sv->mark.size();
+    for(int i = 0; i < quantity; ++i){
+        do{
+            cout << "Nhap diem thi mon thu " << i + 1 << ": ";
+            cin >> sv->mark[i];
+            if(sv->mark[i] < 0 || sv->mark[i] > 10)
+                cout << "Nhap lai!\n";
+        }while(sv->mark[i] < 0 || sv->mark[i] > 10);
+    }
+    float sum = 0;
+    for(int i = 0; i < quantity; ++i)
+        sum += sv->mark[i];
+    sv->diemTb = sum /  quantity;
+    sv->tongDiem = sum;
+}
+
 string ProcessBrithDay(NgaySinh bd){
     string s = "";
     if(bd.ngay < 10)
@@ -104,12 +126,7 @@ void inputSV(SinhVien *s){
     cin.getline(s->ten, MAXNAME);
     ProcessName(s->ten);
     InputBrithDay(s->bd);
-    do{
-        cout << "Nhap diem TB: ";
-        cin >> s->diemTb;
-        if(s->diemTb < 0 || s->diemTb > 10) 
-            cout << "Diem TB khong hop le. Vui long nhap lai\n";
-    }while (s->diemTb < 0 || s->diemTb > 10);
+    InputDiem(s);
 }
 
 void outputSV(SinhVien *s){
@@ -139,22 +156,22 @@ float diemTBLop(LopHoc lop){
 }
 
 void diemTBMax(LopHoc lop){
-    float max = (lop.sv)->diemTb;
+    float max = (lop.sv)->tongDiem;
     for(int i = 0; i < lop.size; i++)
-        if((lop.sv + i)->diemTb > max)
-            max = (lop.sv + i)->diemTb;
+        if((lop.sv + i)->tongDiem > max)
+            max = (lop.sv + i)->tongDiem;
     for(int i = 0; i < lop.size; i++)
-        if((lop.sv + i)->diemTb == max)
+        if((lop.sv + i)->tongDiem == max)
             outputSV(lop.sv + i);
 }
 
 void diemTBMin(LopHoc lop){
-    float min = (lop.sv)->diemTb;
+    float min = (lop.sv)->tongDiem;
     for(int i = 0; i < lop.size; i++)
-        if((lop.sv + i)->diemTb < min)
-            min = (lop.sv + i)->diemTb;
+        if((lop.sv + i)->tongDiem < min)
+            min = (lop.sv + i)->tongDiem;
     for(int i = 0; i < lop.size; i++)
-        if((lop.sv + i)->diemTb == min)
+        if((lop.sv + i)->tongDiem == min)
             outputSV(lop.sv + i);
 }
 
@@ -168,10 +185,10 @@ void timSVID(LopHoc lop, char *ID){
     if(!find) cout << "Khong tim thay sinh vien co ID " << ID << endl;
 }
 
-void sortByTotalScore(SinhVien *sv, int size) {
-    for (int i = 0; i < size - 1; ++i) {
-        for (int j = 0; j < size - i - 1; ++j) {
-            if (sv[j].diemTb < sv[j + 1].diemTb) {
+void sortByTotalScore(SinhVien *sv, int size){
+    for (int i = 0; i < size - 1; ++i){
+        for (int j = 0; j < size - i - 1; ++j){
+            if (sv[j].tongDiem < sv[j + 1].tongDiem){
                 // Hoán đổi thông tin của hai sinh viên
                 SinhVien temp = sv[j];
                 sv[j] = sv[j + 1];
@@ -195,7 +212,7 @@ void Menu(){
 
 int main(){
     LopHoc lop;
-    int size, choice;
+    int size, quantity, choice;
     do{
         Menu();
         cin >> choice;
@@ -204,7 +221,9 @@ int main(){
         case 1:
             cout << "Nhap so sinh vien: ";
             cin >> size;
-            createLopHoc(lop, size);
+            cout << "Nhap so luong diem thi: ";
+            cin >> quantity;
+            createLopHoc(lop, size, quantity);
             inputLopHoc(lop);
             break;
         case 2:
