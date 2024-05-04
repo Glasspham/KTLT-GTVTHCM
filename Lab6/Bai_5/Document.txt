@@ -1,0 +1,4 @@
+This is a sample text file.
+It contains multiple lines of text.
+The program should find the longest string in this file.
+Let's see if it works!
